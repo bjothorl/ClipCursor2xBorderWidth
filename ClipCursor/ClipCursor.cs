@@ -119,10 +119,10 @@
                             string.Format("Get window rectangle win32 error. selectedWindowHandle {0:d}", windowHandle));
                     }
 
-                    windowArea.Left += windowBorderSize.Left*2;
-                    windowArea.Top += windowBorderSize.Top*2;
-                    windowArea.Bottom -= windowBorderSize.Bottom*2;
-                    windowArea.Right -= windowBorderSize.Right*2;
+                    windowArea.Left += windowBorderSize.Left+5;
+                    windowArea.Top += windowBorderSize.Top;
+                    windowArea.Bottom -= windowBorderSize.Bottom+5;
+                    windowArea.Right -= windowBorderSize.Right+5;
 
                     if (ClipCursor(ref windowArea) == 0)
                     {
