@@ -1,1 +1,1 @@
-same as https://github.com/MorMund/ClipCursor just 2x border width
+same as https://github.com/MorMund/ClipCursor, with the idea to add custom border width
