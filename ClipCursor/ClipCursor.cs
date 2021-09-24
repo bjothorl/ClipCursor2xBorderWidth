@@ -21,6 +21,11 @@
 
         private static bool verboseOutput = false;
 
+        static int topBorderDistance = 0;
+        static int rightBorderDistance = 0;
+        static int bottomBorderDistance = 0;
+        static int leftBorderDistance = 0;
+
         #region EnumerationsAndFlags
         private enum GetWindowLongIndex : int
         {
@@ -59,8 +64,17 @@
             {
                 Console.WriteLine("Available windows : ");
                 windowHandles = GetAllWindowHandles();
-                Console.Write("Select a window by entering its index number : ");
+                Console.Write("Select a window by entering its index number: ");
                 selectedIndexStr = Console.ReadLine();
+
+                Console.Write("Insert a number for top border distance (px): ");
+                topBorderDistance = int.Parse(Console.ReadLine());
+                Console.Write("Insert a number for right border distance (px): ");
+                rightBorderDistance = int.Parse(Console.ReadLine());
+                Console.Write("Insert a number for bottom border distance (px): ");
+                bottomBorderDistance = int.Parse(Console.ReadLine());
+                Console.Write("Insert a number for left border distance (px): ");
+                leftBorderDistance = int.Parse(Console.ReadLine());
 
                 // Validate user choice
                 if (!int.TryParse(selectedIndexStr, out int selectedIndex) ||
@@ -119,10 +133,10 @@
                             string.Format("Get window rectangle win32 error. selectedWindowHandle {0:d}", windowHandle));
                     }
 
-                    windowArea.Left += windowBorderSize.Left+6;
-                    windowArea.Top += windowBorderSize.Top+8;
-                    windowArea.Bottom -= windowBorderSize.Bottom+6;
-                    windowArea.Right -= windowBorderSize.Right+6;
+                    windowArea.Top += windowBorderSize.Top + topBorderDistance;
+                    windowArea.Right -= windowBorderSize.Right + rightBorderDistance;
+                    windowArea.Bottom -= windowBorderSize.Bottom + bottomBorderDistance;
+                    windowArea.Left += windowBorderSize.Left + leftBorderDistance;
 
                     if (ClipCursor(ref windowArea) == 0)
                     {
