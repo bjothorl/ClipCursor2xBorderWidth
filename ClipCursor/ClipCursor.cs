@@ -60,6 +60,11 @@
             IntPtr selectedWindowHandle;
             string selectedWindowTitle = string.Empty;
 
+            string topBorderDistanceString = string.Empty;
+            string rightBorderDistanceString = string.Empty;
+            string bottomBorderDistanceString = string.Empty;
+            string leftBorderDistanceString = string.Empty;
+
             while (true)
             {
                 Console.WriteLine("Available windows : ");
@@ -68,23 +73,36 @@
                 selectedIndexStr = Console.ReadLine();
 
                 Console.Write("Insert a number for top border distance (px): ");
-                topBorderDistance = int.Parse(Console.ReadLine());
+                topBorderDistanceString = Console.ReadLine();
                 Console.Write("Insert a number for right border distance (px): ");
-                rightBorderDistance = int.Parse(Console.ReadLine());
+                rightBorderDistanceString = Console.ReadLine();
                 Console.Write("Insert a number for bottom border distance (px): ");
-                bottomBorderDistance = int.Parse(Console.ReadLine());
+                bottomBorderDistanceString = Console.ReadLine();
                 Console.Write("Insert a number for left border distance (px): ");
-                leftBorderDistance = int.Parse(Console.ReadLine());
+                leftBorderDistanceString = Console.ReadLine();
 
                 // Validate user choice
                 if (!int.TryParse(selectedIndexStr, out int selectedIndex) ||
                     selectedIndex < 1 ||
-                    selectedIndex > windowHandles.Count)
+                    selectedIndex > windowHandles.Count ||
+
+                    !int.TryParse(topBorderDistanceString, out topBorderDistance) ||
+                    !int.TryParse(rightBorderDistanceString, out rightBorderDistance) ||
+                    !int.TryParse(bottomBorderDistanceString, out bottomBorderDistance) ||
+                    !int.TryParse(leftBorderDistanceString, out leftBorderDistance)
+                    )
                 {
                     Console.Clear();
-                    Console.WriteLine("Only use numbers that are on the list!");
+                    Console.WriteLine("");
+                    Console.WriteLine("--------------------------------------------------------------------");
+                    Console.WriteLine("For the index, only use numbers that are on the list!");
+                    Console.WriteLine("For the distances, only use whole numbers! (negatives are allowed)");
+                    Console.WriteLine("--------------------------------------------------------------------");
+                    Console.WriteLine("");
                     continue;
                 }
+
+
 
                 selectedWindowHandle = windowHandles[selectedIndex - 1];
                 selectedWindowTitle = GetWindowText(selectedWindowHandle, WindowTitleMaxLength);
@@ -93,9 +111,11 @@
                     Console.WriteLine("The selected Window doesn't exists anymore!");
                     continue;
                 }
-
+                Console.WriteLine("");
                 Console.WriteLine("Locking Cursor to \"{0:s}\"", selectedWindowTitle);
-
+                Console.WriteLine("");
+                Console.WriteLine("Locking only works if the window is focused (alt-tab to another window disables lock).");
+                Console.WriteLine("If you locked THIS window, press ALT+F4 to leave.");
                 LockCursor(selectedWindowHandle);
             }
         }
